@@ -31,7 +31,10 @@ app <- shinyApp(
                                           NULL)),
               toggleDropdown("testTogDD", "Checkbox", 
                               list("Ant", "Grasshopper", "cricket", "spider"), 
-                              selected = c("spider", "Ant"))
+                              selected = c("spider", "Ant")),
+              toggleDropdown("testTogDD2", "Radio", 
+                              list("Ant", "Grasshopper", "cricket", "spider"), 
+                              selected = c("spider", "Ant"), type = "radio")
       )
     ),
   server = 
