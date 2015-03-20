@@ -8,6 +8,10 @@ The idea is that you will be able to add standard shiny inputs to a menubar and 
 to make them work within the menubar. There will also be dropdowns that work like actionButtons, checkboxGroupInputs, 
 or radioButtons. I hope also to reintroduce the ability to nest dropdowns, a feature that was removed from bootstrap3.
 
+Install it with devtools:
+
+`devtools::install_github("ebailey78/shinyMB")`
+
 Here is an example that shows what the package can do so far:
 
 ```R
