@@ -1,5 +1,8 @@
-# shinyMB
-menubars for shiny apps
+# shinyMenus
+
+menus for shiny apps
+
+I've renamed the repository from shinyMB to shinyMenus to be more discriptive and to reflect the fact that it isn't just menu bars, but other menus as well.
 
 This is loosely based on the `bsNavBar` functions that used to be part of shinyBS. It is just a beginning but hopefully 
 it will eventually be an improvement to those functions.
