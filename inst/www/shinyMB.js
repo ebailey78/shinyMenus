@@ -1,7 +1,7 @@
-var shinyMB = {inputBindings: {}};
+var shinyMenus = {inputBindings: {}};
 
-shinyMB.inputBindings.checkboxDropdown = new Shiny.InputBinding();
-$.extend(shinyMB.inputBindings.checkboxDropdown, {
+shinyMenus.inputBindings.checkboxDropdown = new Shiny.InputBinding();
+$.extend(shinyMenus.inputBindings.checkboxDropdown, {
   find: function(scope) {
     return $(scope).find(".smb-checkbox-dropdown");    
   },
@@ -41,10 +41,10 @@ $.extend(shinyMB.inputBindings.checkboxDropdown, {
   }
   
 })
-Shiny.inputBindings.register(shinyMB.inputBindings.checkboxDropdown);
+Shiny.inputBindings.register(shinyMenus.inputBindings.checkboxDropdown);
 
-shinyMB.inputBindings.radioDropdown = new Shiny.InputBinding();
-$.extend(shinyMB.inputBindings.radioDropdown, {
+shinyMenus.inputBindings.radioDropdown = new Shiny.InputBinding();
+$.extend(shinyMenus.inputBindings.radioDropdown, {
   find: function(scope) {
     return $(scope).find(".smb-radio-dropdown");    
   },
@@ -81,4 +81,46 @@ $.extend(shinyMB.inputBindings.radioDropdown, {
   }
   
 })
-Shiny.inputBindings.register(shinyMB.inputBindings.radioDropdown);
+Shiny.inputBindings.register(shinyMenus.inputBindings.radioDropdown);
+
+var shinyMenus.inputBindings.popupMenu = new Shiny.InputBinding();
+$.extend(shinyMenus.inputBindings.popupMenu, {
+  find: function(scope) {
+    return $(scope).find("div.shiny-popup-menu");
+  },
+  getValue: function(el) {
+    return $(el).hasClass("open");
+  },
+  setValue: function(el, value) {
+    // Strictly speaking, you're never supposed to do this...
+    $(el).toggleClass("open", value);
+  },
+  subscribe: function(el, callback) {
+    var $el = $(el);
+    var $tar = $("#" + $(el).attr("data-target"));
+    $tar.on("contextmenu.shiny-menu", function(e) {
+      e.preventDefault();
+      var x = e.clientX;
+      var y = e.clientY;
+      var wh = $(document).height();
+      var ww = $(document).width();
+      var $p = $el.children("ul");
+      var h = $p.outerHeight();
+      var w = $p.outerWidth();
+      if(x + w > ww) x = ww - w;
+      if(y + h > wh) y = wh - h;
+      $el.addClass("open").css("top", y).css("left", x);
+      callback();
+    });
+    $(document).on("click", function(e) {
+      if($el.hasClass("open")) {
+        $el.removeClass("open");
+        callback();
+      }
+    });
+  },
+  unsubscribe: function(el) {
+    $(el).off(".shiny-menu");
+  }
+});
+Shiny.inputBindings.register(shinyMenus.inputBindings.popupMenu);
