@@ -9,6 +9,6 @@ Description: Adds various menus and associated components to shiny apps.
 Imports:
     shiny (>= 0.11),
     htmltools
-URL: https://ebailey78.github.io/shinyMB
-BugReports: https://github.com/ebailey78/shinyMB/issues
+URL: https://ebailey78.github.io/shinyMenus
+BugReports: https://github.com/ebailey78/shinyMenus/issues
 License: GPL-3
