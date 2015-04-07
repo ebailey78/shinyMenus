@@ -1,11 +1,11 @@
-Package: shinyMB
+Package: shinyMenus
 Type: Package
-Title: Menubars for shiny
+Title: Menus for shiny
 Version: 0.10
 Date: 2015-03-20
 Author: Eric Bailey
 Maintainer: Eric Bailey <eb11307@gmail.com>
-Description: Adds menubars and associated components to shiny apps.
+Description: Adds various menus and associated components to shiny apps.
 Imports:
     shiny (>= 0.11),
     htmltools
