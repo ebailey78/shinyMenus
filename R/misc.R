@@ -1,11 +1,11 @@
 .onAttach <- function(...) {
   
   # Create link to javascript and css files for package
-  shiny::addResourcePath("smb", system.file("www", package="shinyMB"))
+  shiny::addResourcePath("smb", system.file("www", package="shinyMenus"))
   
 }
 
-shinyMBDep <- htmltools::htmlDependency("shinyMB", packageVersion("shinyMB"), src = c("href" = "smb"), script = "shinyMB.js", stylesheet = "shinyMB.css")
+shinyMBDep <- htmltools::htmlDependency("shinyMenus", packageVersion("shinyMenus"), src = c("href" = "smb"), script = "shinyMB.js", stylesheet = "shinyMB.css")
 
 # Copy of dropNulls function for shiny to avoid using shiny:::dropNulls
 dropNulls <- function(x) {

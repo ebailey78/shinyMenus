@@ -34,7 +34,7 @@ actionDropdown <- function(inputId, label, choices, icons = NULL) {
       if(!is.null(icons)) {
         li.label <- tagList(icons[i], li.label)
       } 
-      li <- tags$li(tags$a(href = "#", id = choices[[i]], class = "smb-label action-button", li.label))
+      li <- tags$li(tags$a(href = "#", id = choices[[i]], class = "sm-dropdown-input action-button", li.label))
     } else {
       li <- tags$li(class = "divider")
     }

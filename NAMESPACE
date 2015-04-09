@@ -2,4 +2,12 @@
 
 export(actionDropdown)
 export(menuBar)
+export(popupMenu)
+export(smAction)
+export(smCheckbox)
+export(smDivider)
+export(smDropdown)
+export(smHeader)
+export(smRadio)
+export(smToggle)
 export(toggleDropdown)

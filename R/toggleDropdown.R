@@ -33,7 +33,7 @@ toggleDropdown <- function(inputId, label, choices, selected, type = "checkbox")
       if(!is.null(icons)) {
         li.label <- tagList(icons[i], li.label)
       } 
-      li <- tags$li(tags$a(href = "#", "data-smb-value" = choices[[i]], class = "smb-label", li.label))
+      li <- tags$li(tags$a(href = "#", "data-smb-value" = choices[[i]], class = "sm-dropdown-input", li.label))
     } else {
       li <- tags$li(class = "divider")
     }
