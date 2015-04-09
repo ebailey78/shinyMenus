@@ -13,40 +13,77 @@ or radioButtons. I hope also to reintroduce the ability to nest dropdowns, a fea
 
 Install it with devtools:
 
-`devtools::install_github("ebailey78/shinyMB")`
+`devtools::install_github("ebailey78/shinyMenus")`
 
 Here is an example that shows what the package can do so far:
 
 ```R
 library(shiny)
-library(shinyMB)
+library(shinyBS)
+library(shinyMenus)
 
 app <- shinyApp(
   ui = 
     fluidPage(
-      menuBar("testMenu", "shinyMB", full.width = TRUE, fixed = TRUE, 
+      smNavBar("testMenu", "shinyMB", full.width = TRUE, fixed = FALSE, 
               actionLink("testLink", "Link"),
               actionLink("testLink2", "Link #2"),
-              textInput("testTextInput", "Testing"),
-              actionDropdown("testDD", "Action", list("Cat", "Dog", NULL, "Rat", "Sheep", 
-                                                      "Goat", "Horse and Buggy" = "hnb"),
-                             icons = list("github-alt", NULL, NULL, NULL, "child", NULL, 
-                                          NULL)),
-              toggleDropdown("testTogDD", "Checkbox", 
-                              list("Ant", "Grasshopper", "cricket", "spider"), 
-                              selected = c("spider", "Ant")),
-              toggleDropdown("testTogDD2", "Radio", 
-                              list("Ant", "Grasshopper", "cricket", "spider"), 
-                              selected = c("spider", "Ant"), type = "radio")
+              textInput("n", "Sample Size", value = 1000),
+              smNavDropdown("Distribution",
+                 smRadio("dist", "norm", "Normal", selected = TRUE),
+                 smRadio("dist", "lnorm", "Lognormal"),
+                 smRadio("dist", "unif", "Uniform")
+              ),
+              smQuickDropdown("qd2Test", parent = "navbar", "Quick Dropdown", c("Action 1", "Action 2", "Action 3"))
+      ),
+      smDropdown(actionLink("ddTest", "Dropdown"),
+                 smHeader("Action Elements"),
+                 smAction("action1", "Action"),
+                 smAction("action2", "Another Action"),
+                 smDivider(),
+                 smHeader("Checkbox Elements"),
+                 smCheckbox("testCB", "cb1", "First Checkbox"),
+                 smCheckbox("testCB", "cb2", "Second Checkbox"),
+                 smCheckbox("testCB", "cb3", "Third Checkbox", selected = TRUE),
+                 smDivider(),
+                 smHeader("More Checkboxes"),
+                 smCheckbox("testCB2", "cb21", "First Checkbox", selected = TRUE),
+                 smCheckbox("testCB2", "cb22", "Second Checkbox", selected = TRUE),
+                 smCheckbox("testCB2", "cb23", "Third Checkbox"),
+                 smDivider(),
+                 smHeader("Radio Elements"),
+                 smRadio("testRB", "rb1", "First Radio"),
+                 smRadio("testRB", "rb2", "Second Radio", selected = TRUE),
+                 smRadio("testRB", "rb3", "Third Radio", selected = TRUE)
+      ),
+      smQuickDropdown("qdTest", "Quick Dropdown", c("Action 1", "Action 2", "Action 3")),
+      plotOutput("testPlot"),
+      smContextMenu("context1", "testPlot", 
+                    smRadio("dist", "norm", "Normal", selected = TRUE),
+                    smRadio("dist", "lnorm", "Lognormal"),
+                    smRadio("dist", "unif", "Uniform")
       )
+
     ),
   server = 
     function(input, output, session) {
-      observeEvent(input$testTogDD, ({print(input$testTogDD)}))
+      observeEvent(input$testCB2, ({print(input$testCB2)}))
+      observeEvent(input$testRB, ({print(input$testRB)}))
+      observeEvent(input$qdTest, ({print(input$qdTest)}))
+      observeEvent(input[["Action 1"]], ({print(input[["Action 1"]])}))
+      output$testPlot <- renderPlot({
+        dist <- switch(input$dist,
+                       norm = rnorm,
+                       lnorm = rlnorm,
+                       unif = runif
+        )
+        plot(dist(input$n))
+      })
     }
 )
 
 runApp(app)
+
 ```
 
 If you have ideas or suggestions please let me know in the issues section.
