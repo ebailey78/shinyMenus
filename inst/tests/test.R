@@ -5,13 +5,16 @@ library(shinyMenus)
 app <- shinyApp(
   ui = 
     fluidPage(
-      menuBar("testMenu", "shinyMB", full.width = TRUE, fixed = FALSE, 
+      smNavBar("testMenu", "shinyMB", full.width = TRUE, fixed = FALSE, 
               actionLink("testLink", "Link"),
               actionLink("testLink2", "Link #2"),
-              textInput("testTextInput", "Testing"),
-              actionDropdown("testDD", "Action", list("Cat", "Dog", NULL, "Rat", "Sheep", "Goat", "Horse and Buggy" = "hnb"),
-                             icons = list("github-alt", NULL, NULL, NULL, "child", NULL, NULL)),
-              toggleDropdown("testTogDD2", "Radio", list("Ant", "Grasshopper", "cricket", "spider"), selected = c("spider", "Ant"), type = "radio")
+              textInput("n", "Sample Size", value = 1000),
+              smNavDropdown("Distribution",
+                 smRadio("dist", "norm", "Normal", selected = TRUE),
+                 smRadio("dist", "lnorm", "Lognormal"),
+                 smRadio("dist", "unif", "Uniform")
+              ),
+              smQuickDropdown("qd2Test", parent = "navbar", "Quick Dropdown", c("Action 1", "Action 2", "Action 3"))
       ),
       smDropdown(actionLink("ddTest", "Dropdown"),
                  smHeader("Action Elements"),
@@ -33,26 +36,29 @@ app <- shinyApp(
                  smRadio("testRB", "rb2", "Second Radio", selected = TRUE),
                  smRadio("testRB", "rb3", "Third Radio", selected = TRUE)
       ),
-      smDropdown(actionButton("ddTest2", "Dropdown Too"),
-                 smHeader("Linked Checkboxes"),
-                 smCheckbox("testCB2", "cb21", "First Checkbox"),
-                 smCheckbox("testCB2", "cb22", "Second Checkbox", selected = TRUE),
-                 smCheckbox("testCB2", "cb23", "Third Checkbox", selected = TRUE),
-                 smDivider(),
-                 smHeader("Linked Radio Elements"),
-                 smRadio("testRB", "rb1", "First Radio"),
-                 smRadio("testRB", "rb2", "Second Radio"),
-                 smRadio("testRB", "rb3", "Third Radio")
-    )
+      smQuickDropdown("qdTest", "Quick Dropdown", c("Action 1", "Action 2", "Action 3")),
+      plotOutput("testPlot"),
+      smContextMenu("context1", "testPlot", 
+                    smRadio("dist", "norm", "Normal", selected = TRUE),
+                    smRadio("dist", "lnorm", "Lognormal"),
+                    smRadio("dist", "unif", "Uniform")
+      )
 
-      
     ),
   server = 
     function(input, output, session) {
-#      observeEvent(input$testTogDD, ({print(input$testTogDD)}))
-#      observeEvent(input$testTogDD2, ({print(input$testTogDD2)}))
       observeEvent(input$testCB2, ({print(input$testCB2)}))
       observeEvent(input$testRB, ({print(input$testRB)}))
+      observeEvent(input$qdTest, ({print(input$qdTest)}))
+      observeEvent(input[["Action 1"]], ({print(input[["Action 1"]])}))
+      output$testPlot <- renderPlot({
+        dist <- switch(input$dist,
+                       norm = rnorm,
+                       lnorm = rlnorm,
+                       unif = runif
+        )
+        plot(dist(input$n))
+      })
     }
 )
 

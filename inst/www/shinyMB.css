@@ -2,6 +2,10 @@
   padding-left: 5px !important;
 }
 
+.sm-context-menu {
+  position: absolute !important;
+}
+
 /* Code to re-implement sub-dropdowns */
 /* Taken from this Stack Overflow post */
 /* http://stackoverflow.com/questions/18023493/bootstrap-3-dropdown-sub-menu-missing */

@@ -1,5 +1,5 @@
 #'@export
-menuBar <- function(id, brand = NULL, ..., full.width = TRUE, 
+smNavBar <- function(id, brand = NULL, ..., full.width = TRUE, 
                     fixed = FALSE, inverse = FALSE) {
   
   leftItems <- list(...)

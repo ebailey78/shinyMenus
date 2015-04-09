@@ -1,5 +1,3 @@
-var $, scope, Shiny;
-
 // When DOM is ready search for dropdown items and create a shiny binding object 
 // for each unique name. 
 $(document).ready(function () {
@@ -172,7 +170,7 @@ Shiny.inputBindings.register(shinyMenus.inputBindings.radioDropdown);
 shinyMenus.inputBindings.popupMenu = new Shiny.InputBinding();
 $.extend(shinyMenus.inputBindings.popupMenu, {
   find: function (scope) {
-    return $(scope).find("div.shiny-popup-menu");
+    return $(scope).find("div.sm-context-menu");
   },
   getValue: function (el) {
     return $(el).hasClass("open");
