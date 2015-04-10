@@ -34,10 +34,15 @@ app <- shinyApp(
                  smHeader("Radio Elements"),
                  smRadio("testRB", "rb1", "First Radio"),
                  smRadio("testRB", "rb2", "Second Radio", selected = TRUE),
-                 smRadio("testRB", "rb3", "Third Radio", selected = TRUE)
+                 smRadio("testRB", "rb3", "Third Radio", selected = TRUE),
+                 smSubDropdown("Submenu",
+                               smAction("sact1", "Sub Action"),
+                               smAction("sact2", "Another Sub Action")
+                 )
       ),
       smQuickDropdown("qdTest", "Quick Dropdown", c("Action 1", "Action 2", "Action 3")),
       plotOutput("testPlot"),
+      HTML("<p>Right-click on plot to see context menu.</p>"),
       smContextMenu("context1", "testPlot", 
                     smRadio("dist", "norm", "Normal", selected = TRUE),
                     smRadio("dist", "lnorm", "Lognormal"),

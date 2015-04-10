@@ -1,18 +1,12 @@
-id = "qdTest"
-label = "Quick Dropdown"
-elements = c("Checkbox #1" = "cb1", "Checkbox #2" = "cb2", "Checkbox #3" = "cb3")
-parent = "button"
-type = "checkbox"
-selected = c()
-
-
 #'@export
-smQuickDropdown <- function(id, label, elements, parent = "button", type = "action", selected = c()) {
+smQuickDropdown <- function(id, label, elements, parent = "button", 
+                            type = "action", selected = c(), caret = TRUE) {
   
   parID <- paste(id, "parent", sep = "_")
   
   if(parent == "button") {
     par <- actionButton(parID, label = label)
+    if(caret) {par <- tagAppendChild(par, tags$span(class = "caret"))}
   } else {
     if(parent == "navbar") {
       label <- tagList(label, tags$span(class = "caret"))
